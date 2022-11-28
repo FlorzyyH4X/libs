@@ -1,7 +1,13 @@
+local CoreGui = game:GetService("CoreGui")
 local TS = game:GetService("TweenService")
+
 local Library = {}
 
 function Library.Create(UIName)
+	if CoreGui:FindFirstChild("LibraryUI") then
+		CoreGui.LibraryUI:Destroy()
+	end
+	
 	UIName = UIName or "HDMI Library"
 	
 	local LibraryUI = Instance.new("ScreenGui")
@@ -14,7 +20,7 @@ function Library.Create(UIName)
 	local TabContainers = Instance.new("Frame")
 
 	LibraryUI.Name = "LibraryUI"
-	LibraryUI.Parent = game:GetService("CoreGui")
+	LibraryUI.Parent = CoreGui
 	LibraryUI.ZIndexBehavior = Enum.ZIndexBehavior.Sibling
 	LibraryUI.IgnoreGuiInset = true
 	LibraryUI.ResetOnSpawn = false
@@ -124,7 +130,7 @@ function Library.Create(UIName)
 		TabName = TabName or "Tab"
 		
 		local TabFrame = Instance.new("ScrollingFrame")
-		local UILayout = Instance.new("UIListLayout")
+		local B_UILayout = Instance.new("UIListLayout")
 		local TabButton = Instance.new("TextButton")
 		local B_UICorner = Instance.new("UICorner")
 
@@ -138,20 +144,20 @@ function Library.Create(UIName)
 		TabFrame.Size = UDim2.new(1, 0, 1, 0)
 		TabFrame.ScrollBarThickness = 3
 
-		UILayout.Name = "UILayout"
-		UILayout.Parent = TabFrame
-		UILayout.SortOrder = Enum.SortOrder.LayoutOrder
-		UILayout.Padding = UDim.new(0, 4)
+		B_UILayout.Name = "UILayout"
+		B_UILayout.Parent = TabFrame
+		B_UILayout.SortOrder = Enum.SortOrder.LayoutOrder
+		B_UILayout.Padding = UDim.new(0, 4)
 		
 		TabFrame.ChildAdded:Connect(function()
-			TabFrame.CanvasSize = UDim2.new(0, 0, 0, UILayout.AbsoluteContentSize.Y)
+			TabFrame.CanvasSize = UDim2.new(0, 0, 0, B_UILayout.AbsoluteContentSize.Y)
 		end)
 		
 		TabFrame.ChildRemoved:Connect(function()
-			TabFrame.CanvasSize = UDim2.new(0, 0, 0, UILayout.AbsoluteContentSize.Y)
+			TabFrame.CanvasSize = UDim2.new(0, 0, 0, B_UILayout.AbsoluteContentSize.Y)
 		end)
 		
-		TabFrame.CanvasSize = UDim2.new(0, 0, 0, UILayout.AbsoluteContentSize.Y)
+		TabFrame.CanvasSize = UDim2.new(0, 0, 0, B_UILayout.AbsoluteContentSize.Y)
 
 		TabButton.Name = "TabButton"
 		TabButton.Parent = TabCategories
@@ -387,6 +393,147 @@ function Library.Create(UIName)
 
 			UICorner_2.CornerRadius = UDim.new(0, 2)
 			UICorner_2.Parent = TextBox
+		end
+		
+		function MainLibrary.Dropdown(DropdownName, List, Callback)
+			DropdownName = DropdownName or "Dropdown"
+			List = List or {}
+			Callback = Callback or function() end
+			
+			local Dropdown = Instance.new("TextButton")
+			local UICorner = Instance.new("UICorner")
+			local DropdownText = Instance.new("TextLabel")
+			local Icon = Instance.new("ImageLabel")
+			local Down = Instance.new("TextLabel")
+			local DropdownFrame = Instance.new("Frame")
+			local Container = Instance.new("ScrollingFrame")
+			local UILayout = Instance.new("UIListLayout")
+			local UIPadding = Instance.new("UIPadding")
+
+			Dropdown.Name = "Dropdown"
+			Dropdown.Parent = TabFrame
+			Dropdown.BackgroundColor3 = Color3.fromRGB(25, 25, 25)
+			Dropdown.BorderSizePixel = 0
+			Dropdown.Position = UDim2.new(0, 0, 0, 0)
+			Dropdown.Size = UDim2.new(0, 247, 0, 30)
+			Dropdown.Font = Enum.Font.SourceSans
+			Dropdown.Text = ""
+			Dropdown.TextColor3 = Color3.fromRGB(0, 0, 0)
+			Dropdown.TextSize = 14.000
+			
+			Dropdown.MouseButton1Click:Connect(function()
+				if Down.Rotation == 0 then
+					Down.Rotation = 180
+					TS:Create(DropdownFrame, TweenInfo.new(.5, Enum.EasingStyle.Sine, Enum.EasingDirection.Out), {Size = UDim2.new(0, 247, 0, 0)}):Play()
+					wait(.5)
+					DropdownFrame.Visible = false
+					TabFrame.CanvasSize = UDim2.new(0, 0, 0, B_UILayout.AbsoluteContentSize.Y)
+				else
+					Down.Rotation = 0
+					TS:Create(DropdownFrame, TweenInfo.new(.5, Enum.EasingStyle.Sine, Enum.EasingDirection.Out), {Size = UDim2.new(0, 247, 0, 140)}):Play()
+					DropdownFrame.Visible = true
+					wait(.5)
+					TabFrame.CanvasSize = UDim2.new(0, 0, 0, B_UILayout.AbsoluteContentSize.Y)
+				end
+			end)
+
+			UICorner.CornerRadius = UDim.new(0, 4)
+			UICorner.Parent = Dropdown
+
+			DropdownText.Name = "DropdownText"
+			DropdownText.Parent = Dropdown
+			DropdownText.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
+			DropdownText.BackgroundTransparency = 1.000
+			DropdownText.BorderSizePixel = 0
+			DropdownText.Position = UDim2.new(0.113, 0, 0.125, 0)
+			DropdownText.Size = UDim2.new(0, 219, 0, 24)
+			DropdownText.Font = Enum.Font.Gotham
+			DropdownText.Text = "Dropdown"
+			DropdownText.TextColor3 = Color3.fromRGB(255, 255, 255)
+			DropdownText.TextSize = 14.000
+			DropdownText.TextXAlignment = Enum.TextXAlignment.Left
+
+			Icon.Name = "Icon"
+			Icon.Parent = Dropdown
+			Icon.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
+			Icon.BackgroundTransparency = 1.000
+			Icon.BorderSizePixel = 0
+			Icon.Position = UDim2.new(0.03, 0, 0.25, 0)
+			Icon.Size = UDim2.new(0, 13, 0, 15)
+			Icon.Image = "rbxassetid://9728118892"
+
+			Down.Name = "Down"
+			Down.Parent = Dropdown
+			Down.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
+			Down.BackgroundTransparency = 1.000
+			Down.BorderColor3 = Color3.fromRGB(27, 42, 53)
+			Down.BorderSizePixel = 0
+			Down.Position = UDim2.new(0.883, 0, 0.167, 0)
+			Down.Rotation = 180.000
+			Down.Size = UDim2.new(0, 20, 0, 20)
+			Down.Font = Enum.Font.Gotham
+			Down.Text = "^"
+			Down.TextColor3 = Color3.fromRGB(255, 255, 255)
+			Down.TextScaled = true
+			Down.TextSize = 26.000
+			Down.TextWrapped = true
+
+			DropdownFrame.Name = "DropdownFrame"
+			DropdownFrame.Parent = TabFrame
+			DropdownFrame.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
+			DropdownFrame.BackgroundTransparency = 1.000
+			DropdownFrame.BorderSizePixel = 0
+			DropdownFrame.Position = UDim2.new(0, 0, 0, 0)
+			DropdownFrame.Size = UDim2.new(0, 247, 0, 140)
+			DropdownFrame.ClipsDescendants = true
+			DropdownFrame.Visible = false
+
+			Container.Name = "Container"
+			Container.Parent = DropdownFrame
+			Container.Active = true
+			Container.BackgroundColor3 = Color3.fromRGB(25, 25, 25)
+			Container.BorderSizePixel = 0
+			Container.Position = UDim2.new(0.543, 0, 0.057, 0)
+			Container.Size = UDim2.new(0, 104, 0, 125)
+			Container.ScrollBarThickness = 3
+			
+			Container.ChildAdded:Connect(function()
+				Container.CanvasSize = UDim2.new(0, 0, 0, UILayout.AbsoluteContentSize.Y)
+			end)
+
+			Container.ChildRemoved:Connect(function()
+				Container.CanvasSize = UDim2.new(0, 0, 0, UILayout.AbsoluteContentSize.Y)
+			end)
+
+			Container.CanvasSize = UDim2.new(0, 0, 0, UILayout.AbsoluteContentSize.Y)
+
+			UILayout.Name = "UILayout"
+			UILayout.Parent = Container
+			UILayout.SortOrder = Enum.SortOrder.LayoutOrder
+			UILayout.Padding = UDim.new(0, 6)
+
+			UIPadding.Parent = Container
+			UIPadding.PaddingLeft = UDim.new(0, 2)
+			UIPadding.PaddingTop = UDim.new(0, 4)
+			
+			for _, Value in next, List do
+				local Button = Instance.new("TextButton")
+				Button.Name = Value
+				Button.Parent = Container
+				Button.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
+				Button.BackgroundTransparency = 1.000
+				Button.BorderSizePixel = 0
+				Button.Position = UDim2.new(0, 0, 0, 0)
+				Button.Text = Value
+				Button.Size = UDim2.new(0, 102, 0, 25)
+				Button.Font = Enum.Font.Gotham
+				Button.TextColor3 = Color3.fromRGB(255, 255, 255)
+				Button.TextSize = 14.000
+				
+				Button.MouseButton1Click:Connect(function()
+					pcall(Callback, Value)
+				end)
+			end
 		end
 		
 		return MainLibrary

@@ -1,3 +1,4 @@
+local TS = game:GetService("TweenService")
 local Library = {}
 
 function Library.Create(UIName)
@@ -175,11 +176,11 @@ function Library.Create(UIName)
 			
 			for _, Value in next, TabCategories:GetChildren() do
 				if Value:IsA("GuiButton") then
-					Value.BackgroundTransparency = 1
+					TS:Create(Value, TweenInfo.new(.15, Enum.EasingStyle.Sine, Enum.EasingDirection.Out), {BackgroundTransparency = 1}):Play()
 				end
 			end
 			
-			TabButton.BackgroundTransparency = 0
+			TS:Create(TabButton, TweenInfo.new(.15, Enum.EasingStyle.Sine, Enum.EasingDirection.Out), {BackgroundTransparency = 0}):Play()
 			TabFrame.Visible = true
 		end)
 		
@@ -283,10 +284,10 @@ function Library.Create(UIName)
 			Toggle.MouseButton1Click:Connect(function()
 				if Toggled then
 					Toggled = false
-					ToggleBG.BackgroundColor3 = Color3.fromRGB(40, 40, 40)
+					TS:Create(ToggleBG, TweenInfo.new(.15, Enum.EasingStyle.Sine, Enum.EasingDirection.Out), {BackgroundColor3 = Color3.fromRGB(40, 40, 40)}):Play()
 				else
 					Toggled = true
-					ToggleBG.BackgroundColor3 = Color3.fromRGB(68, 15, 225)
+					TS:Create(ToggleBG, TweenInfo.new(.15, Enum.EasingStyle.Sine, Enum.EasingDirection.Out), {BackgroundColor3 = Color3.fromRGB(68, 15, 225)}):Play()
 				end
 				
 				pcall(Callback, Toggled)
@@ -317,6 +318,75 @@ function Library.Create(UIName)
 
 			UICorner_2.CornerRadius = UDim.new(0, 4)
 			UICorner_2.Parent = ToggleBG
+		end
+		
+		function MainLibrary.Button_TextBox(ButtonName, Placeholder, Callback)
+			ButtonName = ButtonName or "Button"
+			Placeholder = Placeholder or "Text here"
+			Callback = Callback or function() end
+			
+			local Button_TextBox = Instance.new("TextButton")
+			local UICorner = Instance.new("UICorner")
+			local ButtonText = Instance.new("TextLabel")
+			local Icon = Instance.new("ImageLabel")
+			local TextBox = Instance.new("TextBox")
+			local UICorner_2 = Instance.new("UICorner")
+
+			Button_TextBox.Name = "Button_TextBox"
+			Button_TextBox.Parent = TabFrame
+			Button_TextBox.BackgroundColor3 = Color3.fromRGB(25, 25, 25)
+			Button_TextBox.BorderSizePixel = 0
+			Button_TextBox.Position = UDim2.new(0, 0, 0, 0)
+			Button_TextBox.Size = UDim2.new(0, 247, 0, 30)
+			Button_TextBox.Font = Enum.Font.SourceSans
+			Button_TextBox.Text = ""
+			Button_TextBox.TextColor3 = Color3.fromRGB(0, 0, 0)
+			Button_TextBox.TextSize = 14.000
+
+			UICorner.CornerRadius = UDim.new(0, 4)
+			UICorner.Parent = Button_TextBox
+
+			ButtonText.Name = "ButtonText"
+			ButtonText.Parent = Button_TextBox
+			ButtonText.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
+			ButtonText.BackgroundTransparency = 1.000
+			ButtonText.BorderSizePixel = 0
+			ButtonText.Position = UDim2.new(0.113, 0, 0.125, 0)
+			ButtonText.Size = UDim2.new(0, 219, 0, 24)
+			ButtonText.Font = Enum.Font.Gotham
+			ButtonText.Text = ButtonName
+			ButtonText.TextColor3 = Color3.fromRGB(255, 255, 255)
+			ButtonText.TextSize = 14.000
+			ButtonText.TextXAlignment = Enum.TextXAlignment.Left
+
+			Icon.Name = "Icon"
+			Icon.Parent = Button_TextBox
+			Icon.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
+			Icon.BackgroundTransparency = 1.000
+			Icon.BorderSizePixel = 0
+			Icon.Position = UDim2.new(0.03, 0, 0.25, 0)
+			Icon.Size = UDim2.new(0, 13, 0, 15)
+			Icon.Image = "rbxassetid://9728118892"
+
+			TextBox.Parent = Button_TextBox
+			TextBox.BackgroundColor3 = Color3.fromRGB(40, 40, 40)
+			TextBox.BorderSizePixel = 0
+			TextBox.Position = UDim2.new(0.494, 0, 0.167, 0)
+			TextBox.Size = UDim2.new(0, 116, 0, 19)
+			TextBox.ClearTextOnFocus = false
+			TextBox.Font = Enum.Font.Gotham
+			TextBox.PlaceholderText = Placeholder
+			TextBox.Text = ""
+			TextBox.TextColor3 = Color3.fromRGB(255, 255, 255)
+			TextBox.TextSize = 14.000
+			TextBox.TextStrokeTransparency = 0.800
+			
+			Button_TextBox.MouseButton1Click:Connect(function()
+				pcall(Callback, TextBox.Text)
+			end)
+
+			UICorner_2.CornerRadius = UDim.new(0, 2)
+			UICorner_2.Parent = TextBox
 		end
 		
 		return MainLibrary

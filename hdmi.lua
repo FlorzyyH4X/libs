@@ -1,3 +1,14 @@
+--[[
+	.__         .___      .__  .__  ._____.                              
+	|  |__    __| _/_____ |__| |  | |__\_ |______________ _______ ___.__.
+	|  |  \  / __ |/     \|  | |  | |  || __ \_  __ \__  \\_  __ <   |  |
+	|   Y  \/ /_/ |  Y Y  \  | |  |_|  || \_\ \  | \// __ \|  | \/\___  |
+	|___|  /\____ |__|_|  /__| |____/__||___  /__|  (____  /__|   / ____|
+	     \/      \/     \/                  \/           \/       \/     
+	Created by FlorzyyH4X
+	Report any problems in the issues area.
+]]--
+
 local CoreGui = game:GetService("CoreGui")
 local TS = game:GetService("TweenService")
 
@@ -84,6 +95,7 @@ function Library.Create(UIName)
 	UITitle.Font = Enum.Font.Gotham
 	UITitle.Text = UIName
 	UITitle.TextColor3 = Color3.fromRGB(255, 255, 255)
+	UITitle.TextScaled = true
 	UITitle.TextSize = 14.000
 	UITitle.TextWrapped = true
 	UITitle.TextXAlignment = Enum.TextXAlignment.Left
@@ -426,13 +438,11 @@ function Library.Create(UIName)
 					TS:Create(DropdownFrame, TweenInfo.new(.5, Enum.EasingStyle.Sine, Enum.EasingDirection.Out), {Size = UDim2.new(0, 247, 0, 0)}):Play()
 					wait(.5)
 					DropdownFrame.Visible = false
-					TabFrame.CanvasSize = UDim2.new(0, 0, 0, B_UILayout.AbsoluteContentSize.Y)
 				else
 					Down.Rotation = 0
 					TS:Create(DropdownFrame, TweenInfo.new(.5, Enum.EasingStyle.Sine, Enum.EasingDirection.Out), {Size = UDim2.new(0, 247, 0, 140)}):Play()
 					DropdownFrame.Visible = true
 					wait(.5)
-					TabFrame.CanvasSize = UDim2.new(0, 0, 0, B_UILayout.AbsoluteContentSize.Y)
 				end
 			end)
 
@@ -486,25 +496,29 @@ function Library.Create(UIName)
 			DropdownFrame.Size = UDim2.new(0, 247, 0, 140)
 			DropdownFrame.ClipsDescendants = true
 			DropdownFrame.Visible = false
+			
+			DropdownFrame.Changed:Connect(function()
+				TabFrame.CanvasSize = UDim2.new(0, 0, 0, B_UILayout.AbsoluteContentSize.Y)
+			end)
 
 			Container.Name = "Container"
 			Container.Parent = DropdownFrame
 			Container.Active = true
 			Container.BackgroundColor3 = Color3.fromRGB(25, 25, 25)
 			Container.BorderSizePixel = 0
-			Container.Position = UDim2.new(0.543, 0, 0.057, 0)
-			Container.Size = UDim2.new(0, 104, 0, 125)
+			Container.Position = UDim2.new(0, 0, 0.057, 0)
+			Container.Size = UDim2.new(0, 246, 0, 125)
 			Container.ScrollBarThickness = 3
 			
 			Container.ChildAdded:Connect(function()
-				Container.CanvasSize = UDim2.new(0, 0, 0, UILayout.AbsoluteContentSize.Y)
+				Container.CanvasSize = UDim2.new(0, 0, 0, UILayout.AbsoluteContentSize.Y + 45)
 			end)
 
 			Container.ChildRemoved:Connect(function()
-				Container.CanvasSize = UDim2.new(0, 0, 0, UILayout.AbsoluteContentSize.Y)
+				Container.CanvasSize = UDim2.new(0, 0, 0, UILayout.AbsoluteContentSize.Y + 45)
 			end)
 
-			Container.CanvasSize = UDim2.new(0, 0, 0, UILayout.AbsoluteContentSize.Y)
+			Container.CanvasSize = UDim2.new(0, 0, 0, UILayout.AbsoluteContentSize.Y + 45)
 
 			UILayout.Name = "UILayout"
 			UILayout.Parent = Container
@@ -513,7 +527,7 @@ function Library.Create(UIName)
 
 			UIPadding.Parent = Container
 			UIPadding.PaddingLeft = UDim.new(0, 2)
-			UIPadding.PaddingTop = UDim.new(0, 4)
+			UIPadding.PaddingTop = UDim.new(0, 8)
 			
 			for _, Value in next, List do
 				local Button = Instance.new("TextButton")
@@ -524,7 +538,7 @@ function Library.Create(UIName)
 				Button.BorderSizePixel = 0
 				Button.Position = UDim2.new(0, 0, 0, 0)
 				Button.Text = Value
-				Button.Size = UDim2.new(0, 102, 0, 25)
+				Button.Size = UDim2.new(0, 236, 0, 25)
 				Button.Font = Enum.Font.Gotham
 				Button.TextColor3 = Color3.fromRGB(255, 255, 255)
 				Button.TextSize = 14.000

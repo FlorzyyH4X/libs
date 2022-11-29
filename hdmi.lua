@@ -95,7 +95,6 @@ function Library.Create(UIName)
 	UITitle.Font = Enum.Font.Gotham
 	UITitle.Text = UIName
 	UITitle.TextColor3 = Color3.fromRGB(255, 255, 255)
-	UITitle.TextScaled = true
 	UITitle.TextSize = 14.000
 	UITitle.TextWrapped = true
 	UITitle.TextXAlignment = Enum.TextXAlignment.Left

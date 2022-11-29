@@ -160,14 +160,14 @@ function Library.Create(UIName)
 		B_UILayout.Padding = UDim.new(0, 4)
 		
 		TabFrame.ChildAdded:Connect(function()
-			TabFrame.CanvasSize = UDim2.new(0, 0, 0, B_UILayout.AbsoluteContentSize.Y)
+			TabFrame.CanvasSize = UDim2.new(0, 0, 0, B_UILayout.AbsoluteContentSize.Y + 45)
 		end)
 		
 		TabFrame.ChildRemoved:Connect(function()
-			TabFrame.CanvasSize = UDim2.new(0, 0, 0, B_UILayout.AbsoluteContentSize.Y)
+			TabFrame.CanvasSize = UDim2.new(0, 0, 0, B_UILayout.AbsoluteContentSize.Y + 45)
 		end)
 		
-		TabFrame.CanvasSize = UDim2.new(0, 0, 0, B_UILayout.AbsoluteContentSize.Y)
+		TabFrame.CanvasSize = UDim2.new(0, 0, 0, B_UILayout.AbsoluteContentSize.Y + 45)
 
 		TabButton.Name = "TabButton"
 		TabButton.Parent = TabCategories

@@ -245,7 +245,7 @@ function Lib.new(Args)
 			local Callback = Args.Callback or function() end
 
 			Button.Name = "Button"
-			Button.Parent = game.StarterGui.FrostLib.Container.Tabs.test
+			Button.Parent = TabFrame
 			Button.Active = false
 			Button.BackgroundColor3 = Color3.fromRGB(30, 30, 30)
 			Button.BorderSizePixel = 0

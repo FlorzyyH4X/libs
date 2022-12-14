@@ -20,7 +20,7 @@ function Lib.new(Args)
 	end
 
 	FrostLib.Name = "FrostLib"
-	FrostLib.Parent = CoreGui
+	FrostLib.Parent = game.Players.LocalPlayer:WaitForChild("PlayerGui")
 	FrostLib.ZIndexBehavior = Enum.ZIndexBehavior.Sibling
 	FrostLib.IgnoreGuiInset = true
 	FrostLib.ResetOnSpawn = false
@@ -33,6 +33,42 @@ function Lib.new(Args)
 	Container.ClipsDescendants = true
 	Container.Position = UDim2.new(0.499630153, 0, 0.5, 0)
 	Container.Size = UDim2.new(0, 405, 0, 261)
+
+	local dragging
+	local dragInput
+	local dragStart
+	local startPos
+
+	local function update(input)
+		local delta = input.Position - dragStart
+		Container.Position = UDim2.new(startPos.X.Scale, startPos.X.Offset + delta.X, startPos.Y.Scale, startPos.Y.Offset + delta.Y)
+	end
+
+	Container.InputBegan:Connect(function(input)
+		if input.UserInputType == Enum.UserInputType.MouseButton1 or input.UserInputType == Enum.UserInputType.Touch then
+			dragging = true
+			dragStart = input.Position
+			startPos = Container.Position
+
+			input.Changed:Connect(function()
+				if input.UserInputState == Enum.UserInputState.End then
+					dragging = false
+				end
+			end)
+		end
+	end)
+
+	Container.InputChanged:Connect(function(input)
+		if input.UserInputType == Enum.UserInputType.MouseMovement or input.UserInputType == Enum.UserInputType.Touch then
+			dragInput = input
+		end
+	end)
+
+	UserInputService.InputChanged:Connect(function(input)
+		if input == dragInput and dragging then
+			update(input)
+		end
+	end)
 
 	MainCorners.CornerRadius = UDim.new(0, 4)
 	MainCorners.Name = "MainCorners"
@@ -72,7 +108,7 @@ function Lib.new(Args)
 
 	ButtonPadding.Name = "ButtonPadding"
 	ButtonPadding.Parent = TabSwitches
-	ButtonPadding.PaddingLeft = UDim.new(0, 5)
+	ButtonPadding.PaddingLeft = UDim.new(0, 10)
 	ButtonPadding.PaddingTop = UDim.new(0, 9)
 
 	Tabs.Name = "Tabs"

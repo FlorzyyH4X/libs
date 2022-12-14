@@ -1,5 +1,6 @@
 local Lib = {}
 
+local CoreGui = game:GetService("CoreGui")
 local TextService = game:GetService("TextService")
 local TweenService = game:GetService("TweenService")
 local UserInputService = game:GetService("UserInputService")
@@ -19,7 +20,7 @@ function Lib.new(Args)
 	end
 
 	FrostLib.Name = "FrostLib"
-	FrostLib.Parent = game.Players.LocalPlayer:WaitForChild("PlayerGui")
+	FrostLib.Parent = CoreGui
 	FrostLib.ZIndexBehavior = Enum.ZIndexBehavior.Sibling
 	FrostLib.IgnoreGuiInset = true
 	FrostLib.ResetOnSpawn = false
@@ -31,7 +32,7 @@ function Lib.new(Args)
 	Container.BorderSizePixel = 0
 	Container.ClipsDescendants = true
 	Container.Position = UDim2.new(0.499630153, 0, 0.5, 0)
-	Container.Size = UDim2.new(0.300000012, 0, 0.300000012, 0)
+	Container.Size = UDim2.new(0, 405, 0, 261)
 
 	MainCorners.CornerRadius = UDim.new(0, 4)
 	MainCorners.Name = "MainCorners"
@@ -56,7 +57,7 @@ function Lib.new(Args)
 	TabSwitches.BackgroundColor3 = Color3.fromRGB(30, 30, 30)
 	TabSwitches.BorderSizePixel = 0
 	TabSwitches.Position = UDim2.new(0.0369822495, 0, 0.17040731, 0)
-	TabSwitches.Size = UDim2.new(0.924556196, 0, 0.145469651, 0)
+	TabSwitches.Size = UDim2.new(0, 374, 0, 37)
 	TabSwitches.CanvasSize = UDim2.new(0, 0, 0, 0)
 	TabSwitches.ScrollBarThickness = 1
 	
@@ -101,9 +102,9 @@ function Lib.new(Args)
 			end
 		end
 
-		Container:TweenSize(UDim2.new(0.075, 0, 0.125, 0), "Out", "Sine", 0.75)
+		Container:TweenSize(UDim2.new(0, 100, 0, 100), "Out", "Sine", 0.75)
 		wait(0.75)
-		Container:TweenSize(UDim2.new(0.3, 0, 0.3, 0), "Out", "Sine", 0.75)
+		Container:TweenSize(UDim2.new(0, 405, 0, 261), "Out", "Sine", 0.75)
 		wait(0.75)
 
 		Title.Visible = true
@@ -308,7 +309,7 @@ function Lib.new(Args)
 			SliderName.BackgroundTransparency = 1.000
 			SliderName.BorderSizePixel = 0
 			SliderName.Position = UDim2.new(0.0266666673, 0, 0, 0)
-			SliderName.Size = UDim2.new(0.453333348, 0, 1, 0)
+			SliderName.Size = UDim2.new(0, 170, 0, 35)
 			SliderName.Font = Enum.Font.SourceSansItalic
 			SliderName.Text = Args.Name or "Slider"
 			SliderName.TextColor3 = Color3.fromRGB(255, 255, 255)
@@ -320,7 +321,7 @@ function Lib.new(Args)
 			SliderButton.BackgroundColor3 = Color3.fromRGB(20, 20, 20)
 			SliderButton.BorderSizePixel = 0
 			SliderButton.Position = UDim2.new(0.512000024, 0, 0.400000006, 0)
-			SliderButton.Size = UDim2.new(0.354000002, 0, 0.200000003, 0)
+			SliderButton.Size = UDim2.new(0, 132, 0, 7)
 			SliderButton.Font = Enum.Font.SourceSans
 			SliderButton.Text = ""
 			SliderButton.TextColor3 = Color3.fromRGB(0, 0, 0)
@@ -346,7 +347,7 @@ function Lib.new(Args)
 			Amount.BackgroundTransparency = 1.000
 			Amount.BorderSizePixel = 0
 			Amount.Position = UDim2.new(0, 0, 0.0857142881, 0)
-			Amount.Size = UDim2.new(0.975999892, 0, 0.800000012, 0)
+			Amount.Size = UDim2.new(0, 365, 0, 28)
 			Amount.Font = Enum.Font.SourceSansItalic
 			Amount.Text = minValue
 			Amount.TextColor3 = Color3.fromRGB(255, 255, 255)

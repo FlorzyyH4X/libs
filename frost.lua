@@ -20,7 +20,7 @@ function Lib.new(Args)
 	end
 
 	FrostLib.Name = "FrostLib"
-	FrostLib.Parent = game.Players.LocalPlayer:WaitForChild("PlayerGui")
+	FrostLib.Parent = CoreGui
 	FrostLib.ZIndexBehavior = Enum.ZIndexBehavior.Sibling
 	FrostLib.IgnoreGuiInset = true
 	FrostLib.ResetOnSpawn = false
